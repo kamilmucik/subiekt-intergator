@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: subiekt-integrator
+
+server:
+  port: 8081
+
+forceApiMock: true

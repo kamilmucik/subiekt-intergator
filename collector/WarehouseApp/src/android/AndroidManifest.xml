@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="pl.estrix.warehouse"
+          android:versionCode="1"
+          android:versionName="1.0.0">
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+        <supports-screens android:xlargeScreens="true"/>
+        <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30"/>
+        <application android:label="MAGAZYN"
+                     android:icon="@mipmap/ic_launcher"
+                     android:isGame="false"
+                     android:allowBackup="true"
+                     android:launchMode="singleTop"
+                     android:name="android.support.multidex.MultiDexApplication"
+                     android:debuggable="false">
+                <activity android:name="javafxports.android.FXActivity"
+                          android:theme="@style/CustomTheme" >
+                          android:label="MAGAZYN"
+<!--                        android:configChanges="orientation|keyboardHidden"-->
+<!--                        android:windowSoftInputMode="adjustResize"-->
+                        android:windowSoftInputMode="stateHidden"
+                        android:screenOrientation="landscape">
+                        <meta-data android:name="java.args" android:value="notificationId"/>
+                        <meta-data android:name="main.class" android:value="pl.estrix.warehouse.MainApp"/>
+                        <meta-data android:name="debug.port" android:value="0"/>
+                        <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+                </activity>
+
+        </application>
+</manifest>

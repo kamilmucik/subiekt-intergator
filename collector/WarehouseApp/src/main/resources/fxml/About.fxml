@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchorePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.estrix.warehouse.controller.about.AboutController">
+    <children>
+        <AnchorPane layoutY="31.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                      <GridPane alignment="CENTER" maxWidth="1.7976931348623157E308" vgap="10.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <Label fx:id="build" text="Label" GridPane.columnIndex="1" />
+                              <Label fx:id="version" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Zbudowano" />
+                              <Label text="Wersja" GridPane.rowIndex="1" />
+                          </children>
+                      </GridPane>
+                  <Label text="IP serwera" />
+                  <TextField fx:id="serverIp" maxWidth="1.7976931348623157E308" />
+                  <Label layoutX="10.0" layoutY="70.0" text="Port serwera" />
+                  <TextField fx:id="serverPort" layoutX="10.0" layoutY="104.0" maxWidth="1.7976931348623157E308" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSaveAction" text="Zapisz">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            </children></AnchorPane>
+    </children>
+</AnchorPane>

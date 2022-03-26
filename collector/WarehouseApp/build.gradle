@@ -1,0 +1,128 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.3.18'//iOS
+    }
+}
+
+apply plugin: 'org.javafxports.jfxmobile'
+apply from: 'ios-build.gradle'
+
+//sonarqube {
+//    properties {
+//        property 'sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage'
+//    }
+//}
+
+repositories {
+
+    jcenter()
+    mavenCentral()
+    google()
+//    maven {
+//        url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
+//    }
+}
+
+version = '1.1'
+def buildTime() {
+    new Date().format('yyyy.MM.dd HH:mm')
+}
+
+mainClassName = 'pl.estrix.warehouse.MainApp'
+
+
+ext {
+    CHARM_DOWN_VERSION = "2.0.1"
+}
+
+
+dependencies {
+
+    compile 'com.gluonhq:charm-down-core:3.8.6'
+    compile 'com.gluonhq:charm-down-plugin-orientation:3.8.6'
+    compile 'com.sun.jersey:jersey-client:1.8'
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    compile "com.gluonhq:charm-down-common:$CHARM_DOWN_VERSION"
+
+
+    desktopRuntime "com.gluonhq:charm-down-desktop:$CHARM_DOWN_VERSION"
+
+    androidRuntime 'com.gluonhq:charm-down-core-android:3.8.6'
+    androidRuntime "com.gluonhq:charm-down-android:$CHARM_DOWN_VERSION"
+
+
+}
+
+jfxmobile {
+    downConfig {
+        version '3.8.6'
+        plugins 'display', 'lifecycle', 'statusbar', 'storage','orientation'
+    }
+    android {
+        androidSdk = "$System.env.ANDROID_HOME"
+        compileSdkVersion = '23'
+        manifest = 'src/android/AndroidManifest.xml'
+    }
+    ios {
+        infoPList = file('src/ios/Default-Info.plist')
+        arch = "arm64"
+        ipaArchs = ["arm64"]
+
+        //iPhone Distribution
+//        iosSignIdentity = "B0E00DE027D229B88289EE324363C262E4FB7CB4"
+
+        //iPhone Developer
+        iosSignIdentity = "664465413DB263F81531B7586A8BFF1E3CD2B1F8"
+
+        forceLinkClasses = [
+                'pl.estrix.warehouse.**.*',
+                'org.javafxports.**.*',
+                'com.gluonhq.**.*'
+        ]
+    }
+}
+
+task xcodebuild {
+    doLast {
+//        xcodebuildIOS("$project.buildDir","$project.projectDir", "AudioController")
+//        xcodebuildIOS("$project.buildDir","$project.projectDir", "EsMicrophone")
+    }
+}
+
+task installNativeLib (type:Copy, dependsOn: xcodebuild) {
+    from("$project.buildDir/native")
+    into("src/ios/jniLibs")
+    include("*.a")
+}
+
+
+def generatedResources = "$buildDir/resources/main/"
+
+sourceSets {
+    main {
+        //let's register an output folder on the main SourceSet:
+        output.dir(generatedResources, builtBy: 'generateMyResources')
+        //it is now a part of the 'main' classpath and will be a part of the jar
+    }
+}
+
+task generateMyResources {
+    doLast {
+        def generatedTmp = new File(generatedResources)
+        if( !generatedTmp.exists() ) {
+            generatedTmp.mkdirs()
+        }
+        def generated = new File(generatedResources, "filter.properties")
+
+        generated.text = "estrix.application.biuld-time=${buildTime()}\n" +
+                "estrix.application.name=${project.name}\n" +
+                "estrix.application.version=${jfxmobile.android.compileSdkVersion}\n" +
+                "estrix.application.desc=${project.description}"
+    }
+}
